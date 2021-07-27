@@ -19,8 +19,7 @@ punct=$(tr -dc '!#$%^&*?:;_' </dev/urandom | head -c1)
 pass="$lower$upper$num$punct"
 
 # Generate the rest of the characters so total length is $len
-pass=$(sed 's|[^a-zA-Z0-9!#$%^&*?:;_]||g' </dev/urandom |
-       tr -d '\r\n' | head -c $(($len - 4)))$pass
+pass=$(tr -cd 'a-zA-Z0-9_' </dev/urandom | head -c $(($len - 4)))$pass
 
 # Randomly shuffle the characters.
 pass=$(printf "%s" "$pass" | fold -w1 | shuf | tr -d '\n')
